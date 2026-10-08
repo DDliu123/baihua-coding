@@ -1,0 +1,209 @@
+/* 白话编程 · 补充样式（自撰）
+   承担两件事：
+   1. Manrope Variable 字体声明（原先由外部样式表承载，该表已整体移除）
+   2. 术语详情弹层的自撰内容样式：白话说 / 使用边界 / 最小示例 / 这样告诉 AI
+   配色一律取 app.css 已有的 CSS 变量，不新增设计语言。 */
+
+/* ---------- 字体 ---------- */
+/* Manrope 由 SIL Open Font License 1.1 授权，可自由再分发。
+   字体声明原先寄生在外部样式表里，该表已整体移除，此处重写为独立声明。
+   中文站只需要 latin 与 latin-ext 两个子集，其余子集文件已删除。 */
+@font-face {
+  font-family: "Manrope Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 800;
+  src: url(./manrope-latin-wght-normal.fedf4c92.woff2) format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Manrope Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 800;
+  src: url(./manrope-latin-ext-wght-normal.f5cc7610.woff2) format("woff2-variations");
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF,
+    U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* ---------- 术语详情：自撰内容区块 ---------- */
+
+.d-sec {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line-soft);
+}
+.d-sec:first-of-type {
+  margin-top: 14px;
+}
+
+.d-sec > h4 {
+  margin: 0 0 4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .09em;
+  color: var(--accent-ink);
+}
+
+.d-sec > .d-hint {
+  margin: 0 0 9px;
+  font-size: 11.5px;
+  line-height: 1.55;
+  color: var(--ink-3);
+}
+
+/* 白话说：用户原话列表 */
+.d-scenes {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 6px;
+}
+.d-scenes li {
+  position: relative;
+  padding: 8px 11px 8px 26px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ink);
+  background: var(--bg-sunk);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--r-sm);
+}
+.d-scenes li::before {
+  content: "\201C";
+  position: absolute;
+  left: 9px;
+  top: 7px;
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--accent);
+}
+
+/* 使用边界 */
+.d-pitfalls {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 6px;
+}
+.d-pitfalls li {
+  position: relative;
+  padding: 7px 11px 7px 26px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--bg-raise);
+  border: 1px solid var(--line-soft);
+  border-left: 2px solid var(--danger);
+  border-radius: var(--r-sm);
+}
+.d-pitfalls li::before {
+  content: "!";
+  position: absolute;
+  left: 10px;
+  top: 8px;
+  width: 12px;
+  height: 12px;
+  margin-top: 1px;
+  font-size: 9px;
+  font-weight: 800;
+  line-height: 12px;
+  text-align: center;
+  color: var(--bg);
+  background: var(--danger);
+  border-radius: 50%;
+}
+
+/* 别名 / 主题标签 */
+.d-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 10px;
+}
+.d-tags span {
+  padding: 2px 8px;
+  font-size: 11px;
+  color: var(--accent-ink);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-line);
+  border-radius: 99px;
+}
+
+/* 最小示例 */
+.d-code {
+  margin: 0;
+  padding: 11px 13px;
+  overflow-x: auto;
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--ink);
+  background: var(--bg-sunk);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--r-sm);
+  white-space: pre;
+  -webkit-overflow-scrolling: touch;
+}
+.d-code-title {
+  margin: 0 0 5px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: .06em;
+  color: var(--ink-3);
+}
+
+/* 这样告诉 AI */
+.d-prompt {
+  position: relative;
+  margin: 0;
+  padding: 11px 13px;
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.75;
+  color: var(--ink);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-line);
+  border-radius: var(--r-sm);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.d-copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 8px;
+  padding: 5px 13px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--bg);
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 99px;
+  cursor: pointer;
+  transition: opacity .2s var(--ease);
+}
+.d-copy:hover { opacity: .86; }
+.d-copy:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.d-copy[data-done="1"] {
+  background: var(--ok);
+  border-color: var(--ok);
+}
+
+/* 卡片上的第一句用户原话 */
+.card-scene {
+  margin: 7px 0 0;
+  padding-left: 9px;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--ink-3);
+  border-left: 2px solid var(--accent-line);
+}
