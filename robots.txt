@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://DDliu123.github.io/baihua-coding/sitemap.xml
