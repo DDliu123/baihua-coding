@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-color-mode="light" data-accent="indigo">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>白话编程｜用你本来会说的话，搜到该用的词</title>
+<meta name="description" content="面向不写代码的人的术语图鉴：按「你要做什么事」分组，用真实场景和用户原话讲清前端、后端、AI、设计与产品概念。说人话就能搜到准确名称，借此把需求讲清楚。共 401 个条目。">
+<meta name="application-name" content="白话编程">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="白话编程｜用你本来会说的话，搜到该用的词">
+<meta property="og:description" content="面向不写代码的人的术语图鉴。401 个前端、后端、AI、设计与产品术语，按「你此刻要做的事」分组。">
+<meta property="og:image" content="./assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="./assets/mark.svg" type="image/svg+xml">
+<link rel="preload" as="image" href="./assets/mark.svg">
+<link rel="stylesheet" href="./assets/detail.css">
+<link rel="stylesheet" href="./assets/app.css">
+<script>
+/* 主题需在首屏前生效，否则会闪一下白底 */
+(function () {
+  var mode = null;
+  try { mode = localStorage.getItem('bhc-color-mode'); } catch (e) {}
+  if (mode !== 'light' && mode !== 'dark') {
+    mode = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  document.documentElement.dataset.colorMode = mode;
+})();
+(function () {
+  var A = {
+    indigo: { '--accent': '#4F46E5', '--accent-ink': '#4338CA', '--accent-soft': '#EEF0FF', '--accent-line': '#C7CCFF' },
+    pine:   { '--accent': '#0F766E', '--accent-ink': '#115E59', '--accent-soft': '#E6F5F2', '--accent-line': '#A7DDD5' },
+    plum:   { '--accent': '#9333EA', '--accent-ink': '#7E22CE', '--accent-soft': '#F6ECFE', '--accent-line': '#DCB8FB' },
+    rust:   { '--accent': '#C2410C', '--accent-ink': '#9A3412', '--accent-soft': '#FDF0E6', '--accent-line': '#F5C39B' }
+  };
+  var id = 'indigo';
+  try { id = localStorage.getItem('bhc-accent') || id; } catch (e) {}
+  var v = Object.prototype.hasOwnProperty.call(A, id) ? A[id] : A.indigo;
+  Object.keys(v).forEach(function (k) { document.documentElement.style.setProperty(k, v[k]); });
+})();
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">跳到主要内容</a>
+
+<header class="bar">
+  <div class="bar-in">
+    <a class="brand" href="./index.html" aria-label="白话编程 首页">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 64 64" width="28" height="28" focusable="false">
+          <rect width="64" height="64" rx="14" fill="var(--accent)"/>
+          <path d="M14 22h16M14 32h11M14 44h9" stroke="#fff" stroke-width="4.5" stroke-linecap="round" opacity="0.9"/>
+          <path d="M36.5 41.5l9-9a4.2 4.2 0 0 1 6 6l-9 9a4.2 4.2 0 0 1-6 0z" fill="none" stroke="#fff" stroke-width="4.5" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <span class="brand-text">
+        <b>白话编程</b>
+        <small>用你本来会说的话，搜到该用的词</small>
+      </span>
+    </a>
+
+    <nav class="bar-nav" aria-label="站内导航">
+      <a href="#groups">术语分组</a>
+      <a href="#how">怎么用</a>
+    </nav>
+
+    <div class="bar-tools">
+      <div class="find">
+        <svg class="find-ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/>
+          <path d="M16 16l4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+        <input id="q" type="search" autocomplete="off"
+               placeholder="搜你本来会说的话，比如「点了没反应」"
+               aria-label="搜索术语" aria-describedby="find-hint">
+        <button class="find-clear" type="button" hidden aria-label="清空搜索"></button>
+        <kbd class="find-kbd" aria-hidden="true">/</kbd>
+      </div>
+      <p class="sr-only" id="find-hint">输入后按回车搜索</p>
+
+      <div class="accents" role="group" aria-label="强调色">
+        <button type="button" class="accent" data-accent="indigo" aria-label="靛蓝" aria-pressed="true"></button>
+        <button type="button" class="accent" data-accent="pine" aria-label="松绿" aria-pressed="false"></button>
+        <button type="button" class="accent" data-accent="plum" aria-label="紫梅" aria-pressed="false"></button>
+        <button type="button" class="accent" data-accent="rust" aria-label="赤陶" aria-pressed="false"></button>
+      </div>
+
+      <button type="button" class="mode" id="modeBtn" aria-label="切换深浅色">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" focusable="false">
+          <g class="ico-sun" stroke-linecap="round">
+            <circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.2M12 19.8V22M2 12h2.2M19.8 12H22M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6"/>
+          </g>
+          <path class="ico-moon" stroke-linejoin="round" d="M20.4 14.1A8.7 8.7 0 0 1 9.9 3.5a8.8 8.8 0 1 0 10.5 10.6Z"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="lead">
+    <h1>你不需要学会术语，<br>只需要知道<span class="hl">该搜哪个词</span>。</h1>
+    <p class="lead-sub">401 个前端、后端、AI、设计与产品术语，全部按「你此刻要做的事」分组。说你会说的话，直接拿到能用的准确表达。</p>
+
+    <div class="how" id="how">
+      <div class="how-step">
+        <span class="how-n">1</span>
+        <div><b>先说人话</b><small>「我想让弹窗能按 esc 关掉」</small></div>
+      </div>
+      <span class="how-arrow" aria-hidden="true"></span>
+      <div class="how-step">
+        <span class="how-n">2</span>
+        <div><b>搜同一个词</b><small>搜框输入后按回车</small></div>
+      </div>
+      <span class="how-arrow" aria-hidden="true"></span>
+      <div class="how-step">
+        <span class="how-n">3</span>
+        <div><b>拿走边界和话术</b><small>粘回 AI 对话，继续下一轮</small></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="picker" id="groups">
+    <div class="picker-row">
+      <div class="group-tabs" id="groupTabs" role="tablist" aria-label="任务分组"></div>
+    </div>
+    <div class="picker-row picker-sub">
+      <span class="sub-label" id="subLabel">按领域细分</span>
+      <div class="side-tabs" id="sideTabs" role="group" aria-label="领域筛选"></div>
+      <button type="button" class="fav-filter" id="favBtn" aria-pressed="false">
+        <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path d="M23.9986 5L17.8856 17.4776L4 19.4911L14.0589 29.3251L11.6544 43L23.9986 36.4192L36.3454 43L33.9586 29.3251L44 19.4911L30.1913 17.4776L23.9986 5Z"/></svg>
+        <span>只看收藏</span><b id="favCount">0</b>
+      </button>
+    </div>
+  </section>
+
+  <div class="sheet" id="sheet">
+    <div class="sheet-head">
+      <h2 id="groupName">—</h2>
+      <p id="groupDesc"></p>
+      <div class="pills" id="groupPills"></div>
+    </div>
+    <div id="results"></div>
+  </div>
+
+</main>
+
+<footer class="foot">
+  <div class="foot-in">
+    <div class="foot-lead">
+      <span class="foot-mark" aria-hidden="true">
+        <svg viewBox="0 0 64 64" width="22" height="22" focusable="false">
+          <rect width="64" height="64" rx="14" fill="var(--accent)"/>
+          <path d="M14 22h16M14 32h11M14 44h9" stroke="#fff" stroke-width="4.5" stroke-linecap="round" opacity="0.9"/>
+          <path d="M36.5 41.5l9-9a4.2 4.2 0 0 1 6 6l-9 9a4.2 4.2 0 0 1-6 0z" fill="none" stroke="#fff" stroke-width="4.5" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <div>
+        <b>白话编程</b>
+        <small>用你本来会说的话，搜到该用的词。共 401 个条目。</small>
+      </div>
+    </div>
+    <nav class="foot-nav" aria-label="站内导航">
+      <a href="#groups">术语分组</a>
+      <a href="#how">怎么用</a>
+      <a href="#main">回到顶部</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="./data/taxonomy.js"></script>
+<script src="./assets/app.js"></script>
+</body>
+</html>
