@@ -207,3 +207,33 @@
   color: var(--ink-3);
   border-left: 2px solid var(--accent-line);
 }
+
+
+/* ---------- 详情页内容体系 v2 ---------- */
+.d-prose {
+  font-size: 13px;
+  line-height: 1.85;
+  color: var(--ink);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.d-summary {
+  padding: 12px 14px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-line);
+  border-radius: var(--r-sm);
+}
+.d-usage { padding-left: 12px; border-left: 2px solid var(--ok); }
+.d-caution { padding: 10px 12px; background: var(--bg-raise); border-radius: var(--r-sm); }
+.d-how { padding-left: 12px; border-left: 2px solid var(--accent-line); }
+.d-empty-note { margin: 0; font-size: 12px; line-height: 1.7; color: var(--ink-3); }
+.d-related { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
+.d-related-item {
+  min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 3px;
+  padding: 10px 11px; text-align: left; color: var(--ink); background: var(--bg-raise);
+  border: 1px solid var(--line-soft); border-radius: var(--r-sm); cursor: pointer;
+}
+.d-related-item:hover { border-color: var(--accent-line); background: var(--accent-soft); }
+.d-related-item b { font-size: 12.5px; font-weight: 650; }
+.d-related-item span, .d-related-item small { font-size: 10.5px; color: var(--ink-3); }
+@media (max-width: 520px) { .d-related { grid-template-columns: 1fr; } }

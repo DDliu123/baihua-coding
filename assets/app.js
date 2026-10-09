@@ -295,23 +295,26 @@
         (hint ? '<p class="d-hint">' + esc(hint) + '</p>' : '') + inner + '</section>';
     }
 
-    var scenes = (t.scenes || []).length
-      ? '<ul class="d-scenes">' + t.scenes.map(function (x) {
-          return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>' : '';
-
-    var pits = (t.pitfalls || []).length
-      ? '<ul class="d-pitfalls">' + t.pitfalls.map(function (x) {
-          return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>' : '';
-
+    function listHTML(items, cls) {
+      return (items || []).length ? '<ul class="' + cls + '">' + items.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>' : '';
+    }
+    function textSection(title, body, cls) {
+      return body ? '<section class="d-sec"><h4>' + esc(title) + '</h4><div class="d-prose ' + (cls || '') + '">' + esc(body) + '</div></section>' : '';
+    }
+    var scenes = listHTML(t.scenes || [], 'd-scenes');
+    var pits = listHTML(t.pitfalls || [], 'd-pitfalls');
     var code = t.code && t.code.body
       ? (t.code.title ? '<p class="d-code-title">' + esc(t.code.title) + '</p>' : '') +
-        '<pre class="d-code">' + esc(t.code.body) + '</pre>' : '';
-
-    var alias = t.alias && t.alias !== t.en
-      ? '<div class="d-tags"><span>也叫 ' + esc(t.alias) + '</span>' +
-        '<span>' + esc(t.topicName || '') + '</span>' +
-        '<span>' + esc(t.cat || '') + '</span></div>' : '';
-
+        '<pre class="d-code">' + esc(t.code.body) + '</pre>'
+      : '<p class="d-empty-note">这个概念不一定适合用一小段代码说明。先理解它解决的问题，再结合项目实际实现。</p>';
+    var alias = (t.alias && t.alias !== t.en) || t.topicName || t.cat
+      ? '<div class="d-tags">' + (t.alias && t.alias !== t.en ? '<span>别名：' + esc(t.alias) + '</span>' : '') +
+        '<span>' + esc(t.topicName || '') + '</span><span>' + esc(t.cat || '') + '</span></div>' : '';
+    var related = (t.relatedTerms || []).length ? '<div class="d-related">' + t.relatedTerms.map(function (r) {
+      return '<button type="button" class="d-related-item" data-related-slug="' + esc(r.slug) + '"><b>' + esc(r.zh) + '</b>' +
+        (r.en ? '<span>' + esc(r.en) + '</span>' : '') + '<small>' + esc(r.reason || '相关概念') + '</small></button>';
+    }).join('') + '</div>' : '';
+    var prompt = t.aiPrompt ? '<pre class="d-prompt">' + esc(t.aiPrompt) + '</pre><button type="button" class="d-copy" data-copy>复制 AI Coding 指令</button>' : '';
     var back = document.createElement('div');
     back.className = 'sheet-back';
     back.innerHTML =
@@ -325,12 +328,15 @@
         '</div>' +
         (it.tagline ? '<p class="detail-tagline">' + esc(it.tagline) + '</p>' : '') +
         alias +
-        sec('白话说', '用户真正会这样描述它——搜不到词时，试着把你想说的话输进来。', scenes) +
-        sec('使用边界', '容易踩的坑，写具体动作而不是"注意性能"。', pits) +
-        sec('最小示例', null, code) +
-        sec('这样告诉 AI', '复制这段，把【】里的内容换成你要的具体功能点。',
-          (t.aiPrompt ? '<pre class="d-prompt">' + esc(t.aiPrompt) + '</pre>' +
-            '<button type="button" class="d-copy" data-copy>复制这段指令</button>' : '')) +
+        textSection('快速理解', t.plainExplanation || t.summary, 'd-summary') +
+        sec('你可能会这样描述', '先从真实需求出发，再认识对应的技术概念。', scenes) +
+        textSection('什么时候使用', t.whenToUse, 'd-usage') +
+        textSection('什么时候不适合', t.whenNotToUse, 'd-caution') +
+        textSection('它在代码或系统里怎么工作', t.howItWorks, 'd-how') +
+        sec('实现示例', null, code) +
+        sec('容易踩的坑', '优先关注会导致功能错误或用户体验不一致的问题。', pits) +
+        sec('相关概念', '遇到相近需求时，可以继续对比这些词条。', related) +
+        sec('带着这个概念去开发', '指令会优先沿用当前项目的技术栈与实现约定。', prompt) +
       '</article>';
 
     document.body.appendChild(back);
@@ -343,6 +349,8 @@
       setTimeout(function () { if (back.parentNode) back.parentNode.removeChild(back); }, 200);
     }
     back.addEventListener('click', function (e) {
+      var relatedBtn = e.target.closest('[data-related-slug]');
+      if (relatedBtn) { close(); openDetail(relatedBtn.getAttribute('data-related-slug')); return; }
       var copy = e.target.closest('.d-copy');
       if (copy) {
         var pre = $('.d-prompt', back);
@@ -351,7 +359,7 @@
           copy.textContent = '已复制';
           copy.setAttribute('data-done', '1');
           setTimeout(function () {
-            copy.textContent = '复制这段指令';
+            copy.textContent = '复制 AI Coding 指令';
             copy.removeAttribute('data-done');
           }, 1600);
         };
